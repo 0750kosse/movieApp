@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <title>Movie App</title>
+</head>
+
+<body>
+  <div class="header">
+    <h3 class="header-description">NETFAILX</h3>
+    <form class="form" id="form">
+      <label for="userInput"></label>
+      <input type="text" id="userInput" placeholder="Search movie...">
+      <button type="submit">GO!</button>
+    </form>
+  </div>
+  <div class="wrapper">
+    <h3 class="movie-searched__header">Your search results :</h3>
+    <div class="movie-searched" id="searched"></div>
+    <h3>Our latest titles are :</h3>
+    <div class="movie-latest" id="latest"></div>
+  </div>
+</body>
+<script src="./config.js"></script>
+<script src="index.js"></script>
+
+</html>
