@@ -8,12 +8,14 @@ const form = document.querySelector('#form');
 const userInput = document.querySelector('#userInput')
 const searchedHeader = document.querySelector('.movie-searched__header');
 const nextPage = document.querySelector('#next');
-const prevPage = document.querySelector('#prev')
+const prevPage = document.querySelector('#prev');
 
 function eventListeners() {
   form.addEventListener('submit', getSearchedMovies)
   nextPage.addEventListener('click', switchPage);
-  prevPage.addEventListener('click', switchPage);
+  prevPage.addEventListener('click', switchPage)
+  nextPage.addEventListener('click', scroll);
+  prevPage.addEventListener('click', scroll);
 }
 
 function parseLatest(results) {
@@ -50,6 +52,13 @@ function switchPage(e) {
     (currentPage = currentPage + 1) :
     (currentPage = currentPage - 1)
   getLatestMovies(currentPage)
+}
+
+function scroll() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
 function getLatestMovies() {
