@@ -18,29 +18,29 @@ function eventListeners() {
 
 function parseLatest(results) {
   searchedHeader.style.display = 'none';
-  const parsed = results.map(result => {
-    const { title, poster_path, release_date } = result;
-    return `
+  const parsed = results.filter(el => el.poster_path != null)
+    .map(result => {
+      const { title, poster_path } = result;
+      return `
     <div class="movie">
-        <p>${title}</p>
-        <p>${release_date}</p>
         <img src=${imgPath}${poster_path} class="poster"></img>
+        <p class="poster-title">${title}</p>
     </div>`
-  }).join("")
+    }).join("")
   return parsed;
 }
 
 function parseSearched(results) {
-  searchedHeader.style.display = 'block';
-  const parsed = results.map(result => {
-    const { title, poster_path, release_date } = result;
-    return `
-      <div class="movie">
-        <p>${title}</p>
-        <p>${release_date}</p>
+  latestMovies.style.display = 'none';
+  const parsed = results.filter(el => el.poster_path != null)
+    .map(result => {
+      const { title, poster_path } = result;
+      return `
+    <div class="movie">
         <img src=${imgPath}${poster_path} class="poster"></img>
-      </div>`
-  }).join("")
+        <p class="poster-title">${title}</p>
+    </div>`
+    }).join("")
   return parsed;
 }
 
