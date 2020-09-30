@@ -59,6 +59,12 @@ button {
   margin: 3vh 0;
 }
 
+.movie-single {
+  padding: 1vh;
+  height: auto;
+  margin: 3vh 0;
+}
+
 .poster {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;

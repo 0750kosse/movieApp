@@ -7,25 +7,25 @@ const searchedMovies = document.querySelector('#searched')
 const form = document.querySelector('#form');
 const userInput = document.querySelector('#userInput')
 const searchedHeader = document.querySelector('.movie-searched__header');
-const nextPage = document.querySelector('#next');
-const prevPage = document.querySelector('#prev');
+const pages = document.querySelector('#pages');
+const singleMovie = document.querySelector('#single');
+const wrapper = document.querySelector('.wrapper')
 
 function eventListeners() {
   form.addEventListener('submit', getSearchedMovies)
-  nextPage.addEventListener('click', switchPage);
-  prevPage.addEventListener('click', switchPage)
-  nextPage.addEventListener('click', scroll);
-  prevPage.addEventListener('click', scroll);
+  wrapper.addEventListener('click', scroll)
+  pages.addEventListener('click', switchPage);
+
+  latestMovies.addEventListener('click', getMovie)
 }
 
 function parseLatest(results) {
-  searchedHeader.style.display = 'none';
   const parsed = results.filter(el => el.poster_path != null)
     .map(result => {
-      const { title, poster_path } = result;
+      const { title, poster_path, id } = result;
       return `
     <div class="movie">
-        <img src=${imgPath}${poster_path} class="poster"></img>
+        <img src="${imgPath}${poster_path}" id="${id}" class="poster"></img>
         <p class="poster-title">${title}</p>
     </div>`
     }).join("")
@@ -33,22 +33,30 @@ function parseLatest(results) {
 }
 
 function parseSearched(results) {
-  latestMovies.style.display = 'none';
   const parsed = results.filter(el => el.poster_path != null)
     .map(result => {
       const { title, poster_path } = result;
       return `
     <div class="movie">
-        <img src=${imgPath}${poster_path} class="poster"></img>
+        <img src="${imgPath}${poster_path}" id="${id}" class="poster"></img>
         <p class="poster-title">${title}</p>
     </div>`
     }).join("")
   return parsed;
 }
 
+function parseMovie(data) {
+  console.log("results are :", data)
+  const { title, poster_path, overview } = data;
+  return `
+        <img src=${imgPath}${poster_path} class="poster"></img>
+        <p class="movie-title">${title}</p>
+        <p class="movie-overview">${overview}</p>`
+}
+
 function switchPage(e) {
   e.preventDefault();
-  e.target.id === nextPage.id ?
+  e.target.id === 'next' ?
     (currentPage = currentPage + 1) :
     (currentPage = currentPage - 1)
   getLatestMovies(currentPage)
@@ -59,6 +67,15 @@ function scroll() {
     top: 0,
     behavior: 'smooth'
   });
+}
+
+function getMovie(e) {
+  e.preventDefault();
+  const id = e.target.id
+  fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=96fc446ecb31737673fc835496bd6ead&language=en-US&page=1`)
+    .then(response => response.json())
+    .then(data => singleMovie.innerHTML = parseMovie(data))
+    .catch(error => console.log(error))
 }
 
 function getLatestMovies() {
