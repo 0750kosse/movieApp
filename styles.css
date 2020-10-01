@@ -61,8 +61,10 @@ button {
 
 .movie-single {
   padding: 1vh;
-  height: auto;
   margin: 3vh 0;
+  height: 100%;
+  width: 100%;
+  
 }
 
 .poster {
@@ -94,4 +96,8 @@ button {
 .next, .prev {
   width: 20vh;
   border-radius: 15px;
+}
+
+#back {
+  display: none;
 }

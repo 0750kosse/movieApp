@@ -10,13 +10,15 @@ const searchedHeader = document.querySelector('.movie-searched__header');
 const pages = document.querySelector('#pages');
 const singleMovie = document.querySelector('#single');
 const wrapper = document.querySelector('.wrapper')
+const backButton = document.querySelector('#back')
 
 function eventListeners() {
   form.addEventListener('submit', getSearchedMovies)
   wrapper.addEventListener('click', scroll)
   pages.addEventListener('click', switchPage);
-
   latestMovies.addEventListener('click', getMovie)
+  singleMovie.addEventListener('click', openMovieDetail);
+  backButton.addEventListener('click', closeMovieDetail)
 }
 
 function parseLatest(results) {
@@ -35,7 +37,7 @@ function parseLatest(results) {
 function parseSearched(results) {
   const parsed = results.filter(el => el.poster_path != null)
     .map(result => {
-      const { title, poster_path } = result;
+      const { title, poster_path, id } = result;
       return `
     <div class="movie">
         <img src="${imgPath}${poster_path}" id="${id}" class="poster"></img>
@@ -46,12 +48,12 @@ function parseSearched(results) {
 }
 
 function parseMovie(data) {
-  console.log("results are :", data)
   const { title, poster_path, overview } = data;
   return `
         <img src=${imgPath}${poster_path} class="poster"></img>
         <p class="movie-title">${title}</p>
-        <p class="movie-overview">${overview}</p>`
+        <p class="movie-overview">${overview}</p>
+        `
 }
 
 function switchPage(e) {
@@ -69,6 +71,18 @@ function scroll() {
   });
 }
 
+function openMovieDetail() {
+  console.log("open movie log")
+  singleMovie.style.display = 'block';
+  backButton.style.display = 'block';
+  wrapper.style.overflowY = 'hidden'
+}
+
+function closeMovieDetail() {
+  singleMovie.style.display = 'none';
+  backButton.style.display = 'none'
+}
+
 function getMovie(e) {
   e.preventDefault();
   const id = e.target.id
@@ -76,6 +90,7 @@ function getMovie(e) {
     .then(response => response.json())
     .then(data => singleMovie.innerHTML = parseMovie(data))
     .catch(error => console.log(error))
+  openMovieDetail()
 }
 
 function getLatestMovies() {
@@ -83,6 +98,7 @@ function getLatestMovies() {
     .then(response => response.json())
     .then(data => latestMovies.innerHTML = parseLatest(data.results))
     .catch(error => console.log(error))
+
 }
 
 function getSearchedMovies(e) {
