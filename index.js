@@ -11,6 +11,7 @@ const pages = document.querySelector('#pages');
 const singleMovie = document.querySelector('#single');
 const wrapper = document.querySelector('.wrapper')
 const backButton = document.querySelector('#back')
+const body = document.querySelector('body');
 
 function eventListeners() {
   form.addEventListener('submit', getSearchedMovies)
@@ -75,12 +76,12 @@ function openMovieDetail() {
   console.log("open movie log")
   singleMovie.style.display = 'block';
   backButton.style.display = 'block';
-  wrapper.style.overflowY = 'hidden'
 }
 
 function closeMovieDetail() {
   singleMovie.style.display = 'none';
-  backButton.style.display = 'none'
+  backButton.style.display = 'none';
+  body.style.overflowY = 'auto';
 }
 
 function getMovie(e) {
@@ -98,7 +99,6 @@ function getLatestMovies() {
     .then(response => response.json())
     .then(data => latestMovies.innerHTML = parseLatest(data.results))
     .catch(error => console.log(error))
-
 }
 
 function getSearchedMovies(e) {

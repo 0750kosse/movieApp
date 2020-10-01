@@ -6,6 +6,7 @@ body {
   font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
   background-color: #141414;
   color: #999;
+  overflow: hidden;
 }
 
 .wrapper {
@@ -60,11 +61,13 @@ button {
 }
 
 .movie-single {
+  display: none;
+  width: 100vw;
+  height:100vh;
   padding: 1vh;
   margin: 3vh 0;
-  height: 100%;
-  width: 100%;
-  
+  position: absolute;
+  background-color:#383838;
 }
 
 .poster {
@@ -100,4 +103,7 @@ button {
 
 #back {
   display: none;
+  position :absolute;
+  top: 90vh;
+  left: 45vw;
 }
